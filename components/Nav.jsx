@@ -6,7 +6,7 @@ import { useEffect, useState, userEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Nav = () => {
-  const isUserLoggedIn = false;
+  const isUserLoggedIn = true;
 
   const [providers, setProviders] = useState(null);
 
@@ -54,6 +54,7 @@ const Nav = () => {
                 height={37}
                 className='rounded-full'
                 alt='profile'
+                onClick={() => {}}
               />
             </Link>
           </div>
@@ -72,8 +73,26 @@ const Nav = () => {
                 </button>
           ))}
           </>
-        )
-        }
+        )}
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className='sm:hidden flex relative'>
+        {isUserLoggedIn ? (
+          <div className='flex'>
+            <Image 
+                src='/assets/images/logo.svg'
+                width={37}
+                height={37}
+                className='rounded-full'
+                alt='profile'
+                onClick={() => {}}
+              />
+          </div>
+        ):(
+          <></>
+        )}
+
       </div>
     </nav>
   )
