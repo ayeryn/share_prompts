@@ -28,10 +28,10 @@ const UserSchema = new Schema({
  * If not, a new model is created
  */
 const User = models.User || model("User", UserSchema);
+export default User;
 
 /**
  * In a constantly running environment, we would do the following:
  *
  * const User = model("User", UserSchema);
- * export default User;
  */
