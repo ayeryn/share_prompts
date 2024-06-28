@@ -11,13 +11,13 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${session?.user._id}/posts`);
+      const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
 
       setPosts(data);
     };
-    if (session?.user._id) fetchPosts();
-  }, []);
+    if (session?.user.id) fetchPosts();
+  }, [session?.user.id]);
 
   const handleEdit = () => {};
   const handleDelete = () => {};
