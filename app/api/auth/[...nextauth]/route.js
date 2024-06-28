@@ -11,33 +11,35 @@ const handler = NextAuth({
     }),
   ],
 
-  async session({ session }) {
-    const sessionUser = await User.findOne({ email: session.user.email });
-    session.user.id = sessionUser._id.toString();
+  callbacks: {
+    async session({ session }) {
+      const sessionUser = await User.findOne({ email: session.user.email });
+      session.user.id = sessionUser._id.toString();
 
-    return session;
-  },
+      return session;
+    },
 
-  async signIn({ profile }) {
-    try {
-      await connectToDB();
+    async signIn({ profile }) {
+      try {
+        await connectToDB();
 
-      // Check if a user already exists
-      const userExists = await User.findOne({
-        email: profile.email,
-      });
-
-      // If not create a new user and save to DB
-      if (!userExists) {
-        await User.create({
+        // Check if a user already exists
+        const userExists = await User.findOne({
           email: profile.email,
-          username: profile.name.replace(" ", "").toLowerCase(),
-          image: profile.picture,
         });
+
+        // If not create a new user and save to DB
+        if (!userExists) {
+          await User.create({
+            email: profile.email,
+            username: profile.name.replace(" ", "").toLowerCase(),
+            image: profile.picture,
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    },
   },
 });
 
