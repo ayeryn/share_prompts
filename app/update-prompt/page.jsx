@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
 
 const EditPrompt = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
@@ -20,8 +21,6 @@ const EditPrompt = () => {
       const response = await fetch(`/api/prompt/${promptId}`);
       const data = await response.json();
 
-      console.log("Prompt Data: ", data);
-
       setPost({
         prompt: data.prompt,
         tag: data.tag,
@@ -31,13 +30,38 @@ const EditPrompt = () => {
     if (promptId) getPromptDetails();
   }, [promptId]);
 
+  const editPrompt = async (e) => {
+    if (!promptId) return alert("Prompt ID not found.");
+
+    e.preventDefault(); // prevent form reloading
+    setSubmitting(true);
+
+    try {
+      const response = await fetch(`/api/prompt/${promptId}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          prompt: post.prompt,
+          tag: post.tag,
+        }),
+      });
+
+      if (response.ok) {
+        router.push("/profile");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <Form
       type="Edit"
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={() => {}}
+      handleSubmit={editPrompt}
     />
   );
 };
