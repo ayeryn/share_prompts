@@ -37,6 +37,9 @@ const Tag = () => {
 
   return (
     <section className="feed">
+      <h1 className="head_text text-left">
+        <span className="blue_gradient">#{tagName}</span>
+      </h1>
       <PromptCardList data={posts} handleTagClick={() => {}} />
     </section>
   );
