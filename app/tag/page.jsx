@@ -33,7 +33,7 @@ const Tag = () => {
       setPosts(data);
     };
     fetchPosts();
-  }, [posts]);
+  }, [tagName]); // run the effect only when tagName changes
 
   return (
     <section className="feed">
