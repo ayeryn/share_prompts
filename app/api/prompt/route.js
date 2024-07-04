@@ -7,7 +7,6 @@ export const GET = async (request) => {
     const prompts = await Prompt.find({}).populate("creator");
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
-    // console.error("Error fetching posts:", error);
     return new Response("Failed to fetch all posts!", {
       status: 500,
       headers: {
