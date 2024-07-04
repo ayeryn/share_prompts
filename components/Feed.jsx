@@ -23,10 +23,13 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const router = useRouter();
 
-  const handleSearchChange = (e) => {};
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
 
   const handleTagClick = (tag) => {
     router.push(`/tag?name=${tag}`);
+    // setSearchText(tag);
   };
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const Feed = () => {
       setPosts(data);
     };
     fetchPosts();
-  }, []);
+  }, [searchText]);
 
   return (
     <section className="feed">
