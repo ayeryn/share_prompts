@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Profile from "@components/profile";
 
-const UserProfile = (userId) => {
-  const searchParams = useSearchParams();
-  const username = searchParams.get("name");
-  const [user, setUser] = useState([]);
+const UserProfile = (obj) => {
+  const userId = obj.params.id;
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const getUserDetails = async () => {
