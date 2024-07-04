@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -34,12 +35,20 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           />
         </div>
         <div className="flex flex-col">
-          <h3 className="font-satoshi font-semibold text-gray-900">
-            {post.creator.username}
-          </h3>
-          <p className="font-inter text-sm text-gray-500">
-            {post.creator.email}
-          </p>
+          <Link
+            href={`/profile/${post.creator.username}?name=${post.creator.username}`}
+            className="flex gap-2">
+            <h3 className="font-satoshi font-semibold text-gray-900">
+              {post.creator.username}
+            </h3>
+          </Link>
+          <Link
+            href={`/profile/${post.creator.username}?name=${post.creator.username}`}
+            className="flex gap-2">
+            <p className="font-inter text-sm text-gray-500">
+              {post.creator.email}
+            </p>
+          </Link>
         </div>
 
         <div className="copy_btn" onClick={handleCopy}>
