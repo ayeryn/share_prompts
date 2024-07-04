@@ -36,14 +36,14 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         </div>
         <div className="flex flex-col">
           <Link
-            href={`/profile/${post.creator.username}?name=${post.creator.username}`}
+            href={`/profile/${post.creator._id}?name=${post.creator.username}`}
             className="flex gap-2">
             <h3 className="font-satoshi font-semibold text-gray-900">
               {post.creator.username}
             </h3>
           </Link>
           <Link
-            href={`/profile/${post.creator.username}?name=${post.creator.username}`}
+            href={`/profile/${post.creator._id}?name=${post.creator.username}`}
             className="flex gap-2">
             <p className="font-inter text-sm text-gray-500">
               {post.creator.email}
