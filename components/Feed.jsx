@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
@@ -22,7 +21,6 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
-  const router = useRouter();
 
   const filterResults = (searchtext) => {
     const regex = new RegExp(searchtext, "i");
@@ -37,7 +35,7 @@ const Feed = () => {
   const handleSearchChange = (e) => {
     const searchtext = e.target.value;
     setSearchText(searchtext);
-    console.log("Search text = ", searchtext);
+    // console.log("Search text = ", searchtext);
 
     if (searchtext === "") {
       setPosts(allPosts);
