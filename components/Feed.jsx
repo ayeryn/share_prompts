@@ -23,24 +23,40 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const router = useRouter();
 
+  const filterResults = (searchtext) => {
+    const regex = new RegExp(searchtext, "i");
+    return posts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    );
+  };
+
   const handleSearchChange = (e) => {
+    // FIXME: Feed doesn't revert to all posts after search is cleared
     setSearchText(e.target.value);
+
+    if (searchText === "") {
+      fetchPosts();
+    } else {
+      setPosts(filterResults(searchText));
+    }
   };
 
   const handleTagClick = (tag) => {
-    router.push(`/tag?name=${tag}`);
-    // setSearchText(tag);
+    setSearchText(tag);
+  };
+
+  const fetchPosts = async () => {
+    const response = await fetch("/api/prompt/");
+    const data = await response.json();
+    setPosts(data);
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/prompt/");
-      const data = await response.json();
-
-      setPosts(data);
-    };
     fetchPosts();
-  }, [searchText]);
+  }, []);
 
   return (
     <section className="feed">
