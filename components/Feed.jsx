@@ -35,13 +35,13 @@ const Feed = () => {
   };
 
   const handleSearchChange = (e) => {
+    // FIXME: search has one char delay??
     setSearchText(e.target.value);
-    // console.log(searchText);
 
     if (searchText === "") {
       setPosts(allPosts);
     } else {
-      setPosts(filterResults(allPosts));
+      setPosts(filterResults(searchText));
     }
   };
 
