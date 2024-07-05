@@ -21,11 +21,12 @@ const PromptCardList = ({ data, handleTagClick }) => {
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
   const router = useRouter();
 
   const filterResults = (searchtext) => {
     const regex = new RegExp(searchtext, "i");
-    return posts.filter(
+    return allPosts.filter(
       (item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
@@ -34,13 +35,13 @@ const Feed = () => {
   };
 
   const handleSearchChange = (e) => {
-    // FIXME: Feed doesn't revert to all posts after search is cleared
     setSearchText(e.target.value);
+    // console.log(searchText);
 
     if (searchText === "") {
-      fetchPosts();
+      setPosts(allPosts);
     } else {
-      setPosts(filterResults(searchText));
+      setPosts(filterResults(allPosts));
     }
   };
 
@@ -48,14 +49,14 @@ const Feed = () => {
     setSearchText(tag);
   };
 
-  const fetchPosts = async () => {
-    const response = await fetch("/api/prompt/");
-    const data = await response.json();
-    setPosts(data);
-  };
-
   useEffect(() => {
-    fetchPosts();
+    const fetchAllPosts = async () => {
+      const response = await fetch("/api/prompt/");
+      const data = await response.json();
+      setPosts(data);
+      setAllPosts(data);
+    };
+    fetchAllPosts();
   }, []);
 
   return (
