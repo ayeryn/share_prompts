@@ -35,18 +35,20 @@ const Feed = () => {
   };
 
   const handleSearchChange = (e) => {
-    // FIXME: search has one char delay??
-    setSearchText(e.target.value);
+    const searchtext = e.target.value;
+    setSearchText(searchtext);
+    console.log("Search text = ", searchtext);
 
-    if (searchText === "") {
+    if (searchtext === "") {
       setPosts(allPosts);
     } else {
-      setPosts(filterResults(searchText));
+      setPosts(filterResults(searchtext));
     }
   };
 
   const handleTagClick = (tag) => {
     setSearchText(tag);
+    setPosts(filterResults(tag));
   };
 
   useEffect(() => {
